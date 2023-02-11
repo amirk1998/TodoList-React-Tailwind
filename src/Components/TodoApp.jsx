@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Filter from './Filter';
 import NavBar from './NavBar';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
 const TodoApp = () => {
   const [todos, setTodos] = useState([]);
+  const [filterTodos, setFilterTodos] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('All');
+
+  useEffect(() => {
+    filterTodoFunction(selectedOption.value);
+  }, [todos, selectedOption]);
 
   const addTodo = (input) => {
     const newTodo = {
@@ -44,13 +51,36 @@ const TodoApp = () => {
     setTodos(updatedTodos);
   };
 
+  const filterTodoFunction = (status) => {
+    switch (status) {
+      case 'Completed':
+        setFilterTodos(todos.filter((t) => t.isCompleted));
+        break;
+      case 'Uncompleted':
+        setFilterTodos(todos.filter((t) => !t.isCompleted));
+        break;
+      default:
+        setFilterTodos(todos);
+    }
+  };
+
+  const selectHandler = (e) => {
+    console.log(e);
+    setSelectedOption(e);
+    filterTodoFunction(e.value);
+  };
+
   return (
     <div className='flex flex-col items-center'>
-      <NavBar unCompletedTodos={todos.filter((t) => !t.isCompleted).length} />
+      <NavBar
+        unCompletedTodos={todos.filter((t) => !t.isCompleted).length}
+        selectedOption={selectedOption}
+        onChange={selectHandler}
+      />
       <div className='flex flex-col items-center w-[40rem] bg-white border-[1px] border-solid border-stone-300 rounded-[5px] p-2 text-lg'>
         <TodoForm submitTodo={addTodo} />
         <TodoList
-          todos={todos}
+          todos={filterTodos}
           onComplete={completeTodo}
           onDelete={removeTodo}
           onUpdateTodo={updateTodo}
