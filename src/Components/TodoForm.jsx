@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const TodoForm = (props) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(props.edit ? props.edit.text : '');
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const changeHandler = (e) => {
     // console.log(e.target.value);
@@ -28,10 +34,15 @@ const TodoForm = (props) => {
           type='text'
           value={input}
           onChange={changeHandler}
-          className=' mt-1  block w-full h-8 px-2 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0'
+          ref={inputRef}
+          placeholder={props.edit ? 'Update Todo' : 'Add Todo'}
+          className=' mt-1  block w-full h-8 px-2 rounded-md bg-gray-100 border-2 border-transparent focus:border-violet-600 focus:bg-white focus:ring-0 focus:outline-none'
         />
-        <button className=' text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 '>
-          Add
+        <button
+          type='submit'
+          className=' text-white bg-violet-600 hover:bg-violet-800 focus:ring-4 focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 '
+        >
+          {props.edit ? 'Update' : 'Add'}
         </button>
       </form>
     </div>
