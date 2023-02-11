@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NavBar from './NavBar';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
@@ -30,8 +31,8 @@ const TodoApp = () => {
   };
 
   const removeTodo = (id) => {
-    const filterdTodo = todos.filter((item) => item.id !== id);
-    setTodos(filterdTodo);
+    const filteredTodo = todos.filter((item) => item.id !== id);
+    setTodos(filteredTodo);
   };
 
   const updateTodo = (id, newValue) => {
@@ -44,14 +45,17 @@ const TodoApp = () => {
   };
 
   return (
-    <div className='flex flex-col items-center w-[40rem] bg-white border-[1px] border-solid border-stone-300 rounded-[5px] p-2 text-lg'>
-      <TodoForm submitTodo={addTodo} />
-      <TodoList
-        todos={todos}
-        onComplete={completeTodo}
-        onDelete={removeTodo}
-        onUpdateTodo={updateTodo}
-      />
+    <div className='flex flex-col items-center'>
+      <NavBar unCompletedTodos={todos.filter((t) => !t.isCompleted).length} />
+      <div className='flex flex-col items-center w-[40rem] bg-white border-[1px] border-solid border-stone-300 rounded-[5px] p-2 text-lg'>
+        <TodoForm submitTodo={addTodo} />
+        <TodoList
+          todos={todos}
+          onComplete={completeTodo}
+          onDelete={removeTodo}
+          onUpdateTodo={updateTodo}
+        />
+      </div>
     </div>
   );
 };
