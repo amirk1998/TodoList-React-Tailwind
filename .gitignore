@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+
+# TODO : Complete Modal.jsx
+src/Components/Modal.jsx

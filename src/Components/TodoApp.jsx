@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Filter from './Filter';
 import NavBar from './NavBar';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
@@ -42,8 +41,8 @@ const TodoApp = () => {
     setTodos(filteredTodo);
   };
 
-  const updateTodo = (id, newValue) => {
-    const index = todos.findIndex((item) => item.id === id);
+  const updateTodo = (NewID, newValue) => {
+    const index = todos.findIndex((todo) => todo.id === NewID);
     const selectedTodo = { ...todos[index] };
     selectedTodo.text = newValue;
     const updatedTodos = [...todos];

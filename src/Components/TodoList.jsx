@@ -5,8 +5,8 @@ import TodoForm from './TodoForm';
 const TodoList = ({ todos, onComplete, onDelete, onUpdateTodo }) => {
   const [edit, setEdit] = useState({ id: null, text: '', isCompleted: false });
 
-  const editTodo = (newValue) => {
-    onUpdateTodo(edit.id, newValue);
+  const editTodo = (id, newValue) => {
+    onUpdateTodo(id, newValue);
     setEdit({ id: null, text: '' });
   };
 
@@ -27,7 +27,6 @@ const TodoList = ({ todos, onComplete, onDelete, onUpdateTodo }) => {
 
   return (
     <div>
-      {/* {edit.id ? <TodoForm submitTodo={editTodo} edit={edit} /> : renderTodos()} */}
       {edit.id ? <TodoForm submitTodo={editTodo} edit={edit} /> : renderTodos()}
     </div>
   );
